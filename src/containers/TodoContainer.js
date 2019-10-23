@@ -30,11 +30,16 @@ const mapDispatchToProps =  dispatch => ({
     type: 'REFRESH_TODOS',
     payload: todos
   }),
-  updateTodoStatus: (id, status) => dispatch({
-    type: 'UPDATE_TODO_STATUS',
-    payload: {id, status}
-  },
-  TodoResource.updateStatus(id, status))
+  updateTodoStatus: (todo) => {
+    TodoResource.updateStatus(todo)
+      .then(res => res.json())
+      .then(({id, status, content}) => {
+        dispatch({
+          type: 'UPDATE_TODO_STATUS',
+          payload: {id, status, content}
+        })
+      })
+  }
 });
 
 export default connect(
