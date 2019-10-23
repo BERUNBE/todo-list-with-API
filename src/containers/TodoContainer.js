@@ -33,10 +33,10 @@ const mapDispatchToProps =  dispatch => ({
   updateTodoStatus: (todo) => {
     TodoResource.updateStatus(todo)
       .then(res => res.json())
-      .then(({id, status, content}) => {
+      .then(({id, content, status}) => {
         dispatch({
           type: 'UPDATE_TODO_STATUS',
-          payload: {id, status, content}
+          payload: {id, content, status}
         })
       })
   }

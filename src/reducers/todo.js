@@ -27,8 +27,8 @@ export default (state = initialState, { type, payload }) => {
         const updatedTodoList = state.todos.map(todoItem => {
           if (todoItem.id === payload.id) {
             return { id: payload.id, 
-                      status: payload.status,
-                      content: todoItem.content };
+                      content: todoItem.content,
+                      status: payload.status };
           } else {
             return todoItem;
           }
