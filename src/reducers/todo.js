@@ -23,6 +23,19 @@ export default (state = initialState, { type, payload }) => {
         isOnlyActive: payload
       };
 
+    case "UPDATE_TODO_STATUS":
+        const updatedTodoList = state.todos.map(todoItem => {
+          if (todoItem.id === payload.id) {
+            return { id: payload.id, 
+                      status: payload.status,
+                      content: todoItem.content };
+          } else {
+            return todoItem;
+          }
+        });
+        return {
+          todos: updatedTodoList
+        }
     default:
       return state
   }
