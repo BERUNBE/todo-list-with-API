@@ -2,17 +2,11 @@ import React, {Component} from 'react';
 import TodoInput from './TodoInput'
 import Todos from './Todos'
 import "./Todo.css"
-import TodoResource from '../../api/TodoResource';
 
 export default class TodoWrapper extends Component {
 
   componentDidMount() {
-    TodoResource.getAll()
-      .then(res => res.json())
-      .then(res => {
-        console.log("todos res:", res._embedded.todos);
-        this.props.refreshTodos( res._embedded.todos)
-      })
+    this.props.refreshTodos();
   }
 
   addNewTodo = newTodoContent => {
@@ -21,6 +15,14 @@ export default class TodoWrapper extends Component {
     }
   };
 
+  toggleTodoFilterWrapper = (boolean) => {
+    if(boolean) {
+      this.props.filterTodos();
+    } else {
+      this.props.refreshTodos();
+    }
+  }
+
   updateTodoStatusWrapper = (todo) => {
     this.props.updateTodoStatus(todo);
   }
@@ -28,7 +30,7 @@ export default class TodoWrapper extends Component {
   render() {
     return (
       <div className="todo-wrapper">
-        <TodoInput onNewTodoAdded={this.addNewTodo}/>
+        <TodoInput onNewTodoAdded={this.addNewTodo} onToggleFilter={this.toggleTodoFilterWrapper}/>
         <Todos todos={this.props.todos} onChangeStatus={this.updateTodoStatusWrapper}/>
       </div>
     )

@@ -26,10 +26,19 @@ const mapDispatchToProps =  dispatch => ({
         })
       })
   },
-  refreshTodos: todos => dispatch({
-    type: 'REFRESH_TODOS',
-    payload: todos
+  filterTodos: () => dispatch({
+    type: 'SET_FILTER'
   }),
+  refreshTodos: () => {
+    TodoResource.getAll()
+    .then(res => res.json())
+    .then(res => {
+      dispatch({
+        type: 'REFRESH_TODOS',
+        payload: res._embedded.todos
+      })
+    })
+  },
   updateTodoStatus: (todo) => {
     TodoResource.updateStatus(todo)
       .then(res => res.json())

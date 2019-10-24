@@ -14,15 +14,18 @@ export default (state = initialState, { type, payload }) => {
     case "REFRESH_TODOS":
       return {
         ...state,
-        todos: payload
+        todos: payload,
+        isOnlyActive: false
       };
 
     case "SET_FILTER":
+      const filteredTodoList = state.todos.filter(todoItem => todoItem.status === 'active');
       return {
         ...state,
-        isOnlyActive: payload
+        todos: filteredTodoList, 
+        isOnlyActive: true
       };
-
+      
     case "UPDATE_TODO_STATUS":
         const updatedTodoList = state.todos.map(todoItem => {
           if (todoItem.id === payload.id) {
@@ -35,8 +38,9 @@ export default (state = initialState, { type, payload }) => {
         });
         return {
           todos: updatedTodoList
-        }
+        };
+
     default:
-      return state
+      return state;
   }
 }

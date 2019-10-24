@@ -14,11 +14,16 @@ export default class TodoInput extends Component {
     this.setState({inputValue: ''})
   };
 
+  toggleFilter = (e) => {
+    this.props.onToggleFilter(e.target.checked);
+  }
+
   render() {
     return (
       <div className="todo-input" >
         <input type="text" value={this.state.inputValue} onChange={this.handleInputChange} />
         <button onClick={this.dispatch}>add</button>
+        <input type="checkbox" value="Show only active" onChange={this.toggleFilter}></input><label>Show only active</label>
       </div>
     )
   }
